@@ -6,9 +6,11 @@ import Logo from '@/components/logo';
 export default function Home() {
 	const [position, setPosition] = useState({ x: 100, y: 100 });
 	const [velocity, setVelocity] = useState({ dx: 2, dy: 2 });
+	const [color, setColor] = useState('#f00');
 	const logoRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
+		const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff', '#ffa500'];
 		let animationFrameId: number;
 
 		const moveLogo = () => {
@@ -39,6 +41,16 @@ export default function Home() {
 
 				setVelocity({ dx, dy });
 
+				// Change color when logo hits the edge
+				if (
+					newX <= 0 ||
+					newX + logoWidth >= screenWidth ||
+					newY <= 0 ||
+					newY + logoHeight >= screenHeight
+				) {
+					setColor(colors[Math.floor(Math.random() * colors.length)]);
+				}
+
 				return { x: newX, y: newY };
 			});
 
@@ -62,7 +74,7 @@ export default function Home() {
 					width: '30%',
 				}}
 			>
-				<Logo />
+				<Logo color={color} />
 			</div>
 		</main>
 	);
