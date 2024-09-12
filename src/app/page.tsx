@@ -5,7 +5,7 @@ import Logo from '@/components/logo';
 
 export default function Home() {
 	const [position, setPosition] = useState({ x: 100, y: 100 });
-	const [velocity, setVelocity] = useState({ dx: 2, dy: 2 });
+	const [velocity, setVelocity] = useState({ dx: 1.5, dy: 1.5 });
 	const [color, setColor] = useState('#f00');
 	const logoRef = useRef<HTMLDivElement>(null);
 
