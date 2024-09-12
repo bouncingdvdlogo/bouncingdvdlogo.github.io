@@ -15,6 +15,7 @@ export const metadata: Metadata = {
 		creator: '@minagishl',
 		card: 'summary',
 	},
+	verification: { google: 'osRcS4LozGm8N8EcA9Uu_D8ZgymTHS1GSaBiH_VO5yQ' },
 };
 
 export default function RootLayout({
