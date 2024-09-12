@@ -4,6 +4,7 @@ import './globals.css';
 export const metadata: Metadata = {
 	title: 'Bouncing DVD logo',
 	description: 'Watch the bouncing DVD logo on the internet',
+	metadataBase: new URL('https://bouncingdvdlogo.github.io'),
 	openGraph: {
 		title: 'Bouncing DVD logo',
 		description: 'Watch the bouncing DVD logo on the internet',
