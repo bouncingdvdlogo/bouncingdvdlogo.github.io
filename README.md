@@ -6,7 +6,7 @@ This project is an application that displays a DVD logo bouncing over the Intern
 
 ### Requirements
 
-- Node.js (recommended version: 14.x or higher)
+- Node.js (recommended version: 10.x or higher)
 - npm
 
 ### Installation
