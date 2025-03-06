@@ -4,20 +4,22 @@ import { useState, useEffect, useRef } from 'react';
 import Logo from '@/components/logo';
 
 export default function Home() {
+	// Initial values only set the sign; actual speed is calculated later based on the logo size
 	const [position, setPosition] = useState({ x: 100, y: 100 });
-	const [velocity, setVelocity] = useState({ dx: 1.5, dy: 1.5 });
+	const [velocity, setVelocity] = useState({ dx: 1, dy: 1 });
 	const [color, setColor] = useState('#f00');
 	const logoRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
 		const colors = ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff', '#ffa500'];
 		let animationFrameId: number;
+		// Reference logo width (e.g., 384px)
+		const referenceLogoWidth = 384;
+		// Base speed (speed at the reference size)
+		const baseSpeed = 1.5;
 
 		const moveLogo = () => {
 			setPosition((prevPosition) => {
-				let newX = prevPosition.x + velocity.dx;
-				let newY = prevPosition.y + velocity.dy;
-
 				// Get screen width and height
 				const screenWidth = window.innerWidth;
 				const screenHeight = window.innerHeight;
@@ -26,9 +28,19 @@ export default function Home() {
 				const logoWidth = logoRef.current ? logoRef.current.offsetWidth : 100;
 				const logoHeight = logoRef.current ? logoRef.current.offsetHeight : 100;
 
+				// Calculate speed factor based on the ratio of the current logo width to the reference width
+				const speedFactor = logoWidth / referenceLogoWidth;
+				// Calculate new velocity while preserving the sign
+				const computedDx = Math.sign(velocity.dx) * baseSpeed * speedFactor;
+				const computedDy = Math.sign(velocity.dy) * baseSpeed * speedFactor;
+
+				// Calculate new position
+				let newX = prevPosition.x + computedDx;
+				let newY = prevPosition.y + computedDy;
+
 				// Logic when you hit the edge of the screen
-				let dx = velocity.dx;
-				let dy = velocity.dy;
+				let dx = computedDx;
+				let dy = computedDy;
 
 				if (newX <= 0 || newX + logoWidth >= screenWidth) {
 					dx = -dx; // Reverses horizontal velocity
@@ -39,7 +51,8 @@ export default function Home() {
 					newY = newY <= 0 ? 0 : screenHeight - logoHeight;
 				}
 
-				setVelocity({ dx, dy });
+				// Set new velocity
+				setVelocity({ dx: dx, dy: dy });
 
 				// Change color when logo hits the edge
 				if (
